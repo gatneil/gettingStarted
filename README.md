@@ -1,5 +1,5 @@
-Getting Started On Azure (An Unofficial Guide)
-==============================================
+Getting Started On Azure (An Unofficial Guide by a Linux User)
+==============================================================
 
 # Basics
 
