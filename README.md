@@ -36,8 +36,14 @@ azure -h
 # make sure we are in ARM mode
 azure config mode arm
 
-# TODO how to find URN
+# TODO make these use command line arguments instead of prompts
+
+# TODO how to find URN; link to page listing images
 azure vm quick-create
+
+# TODO create VM from custom image
+
+# TODO show adding extension; link to page listing extensions
 
 # TODO explanation
 azure vmss quick-create
@@ -54,3 +60,5 @@ TODO Storage Accounts
 TODO Networking; VMs open if no NSGs specified
 
 TODO Deleting a VM does not delete related resources (NIC, PIP, SA, etc.)
+
+TODO special steps for deploying marketplace images (e.g. Bitnami)
