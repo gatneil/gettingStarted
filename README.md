@@ -59,7 +59,9 @@ TODO
 
 # Potential Surprises
 
-TODO Storage Accounts
+[Storage Accounts](https://azure.microsoft.com/en-us/documentation/articles/storage-create-storage-account/): All persistent disks must go in a container within a storage account. Storage accounts can have different replication types and can be either `Standard` or `Premium` (premium is faster but more expensive). To use premium storage to back VM disks, the VMs must have an `S` in the instance size (e.g. `DS1`). You probably shouldn't but more than 40 VM disks in a storage account for performance reasons. When using multiple storage accounts to get better performance, try to spread across the alphabet the prefix of the storage account name.
+
+TODO temporary disk
 
 TODO Networking; VMs open if no NSGs specified
 
