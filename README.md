@@ -17,6 +17,10 @@ TODO
 
 TODO
 
+## Service Principals
+
+TODO
+
 ## Ways to access Azure
 
 * [REST API](https://msdn.microsoft.com/en-us/library/azure/dn790568.aspx)
