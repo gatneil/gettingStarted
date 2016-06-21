@@ -23,8 +23,8 @@ TODO
 * [xPlat CLI](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/)
 * [Powershell](https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/)
 * [SDKs in various languages](https://azure.microsoft.com/en-us/downloads/)
-* [Old Portal](manage.windowsazure.com) (**only supports ASM**)
-* [New Portal](portal.azure.com) (**supports both ASM and ARM**)
+* [Old Portal](https://manage.windowsazure.com) (**only supports ASM**)
+* [New Portal](https://portal.azure.com) (**supports both ASM and ARM**)
 * [ARM Templates](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/)
 
 # Scripting Examples
