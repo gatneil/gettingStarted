@@ -33,6 +33,9 @@ TODO
 # add -h to any command to see the help
 azure -h
 
+# make sure we are in ARM mode
+azure config mode arm
+
 # TODO how to find URN
 azure vm quick-create
 
