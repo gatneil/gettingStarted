@@ -11,7 +11,7 @@ Last updated June 21, 2016.
 
 * [ASM vs. ARM](https://azure.microsoft.com/en-us/documentation/articles/resource-manager-deployment-model/): Azure Resource Manager (ARM) is the new stack; Azure Service Management (ASM or "classic") is the old stack. Use ARM whenever possible. If you have ASM infrastructure that you want to migrate to ARM, refer to [this documentation](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-migration-classic-resource-manager-deep-dive/). **This getting started guide is ARM-centric.**
 
-* [Resource Groups](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-groups) hold resources that share the same lifecycle. I use them to delete entire projects worth of infrastructure with one command instead of manually keeping track of all the resources I create over the lifetime of a project.
+* [Resource Groups](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-groups) hold resources that share the same lifecycle. I use them to delete entire projects with one command instead of manually keeping track of all the resources I create over the lifetime of a project.
 
 
 # Ways to access Azure
@@ -37,19 +37,29 @@ azure login
 # make sure we are in ARM mode
 azure config mode arm
 
-# TODO how to get list of regions
+# get list of regions we can deploy to
+azure location list
 
-# TODO make these use command line arguments instead of prompts
+# quick-create a VM (uses reasonable defaults; for more control, use `azure vm create`)
+azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location westus --os-type Linux --image-urn UbuntuLTS --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd
 
-# TODO how to find URN; link to page listing images
-azure vm quick-create
+#
+# you can find more info about VM sizes here:
+# https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-sizes/
+#
+# commonly used VM images have aliases, which can be seen in the help text for azure vm quick-create.
+# If you want to use an image that doesn't have an alias, you will need to use the commands
+# `azure vm image publisher list` and `azure vm image list <publisher>` to find the image you want.
+# In this case, the image-urn is of the form Publisher:Offer:Sku:Version (version can be `latest` if you want the latest set of patches).
+# I have a script that runs daily to get the full list; it dumps the output here: http://armtg.azurewebsites.net/vm_image_list.html
+#
 
 # TODO create VM from custom image
 
 # TODO show adding extension; link to page listing extensions
 
-# TODO explanation
-azure vmss quick-create
+# VM Scale Sets (VMSS) are sets of identical VMs in a highly available configuration that can autoscale/manual scale (more info here: https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/)
+azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss --location westus --image-urn UbuntuLTS --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd --capacity 3
 ```
 
 
