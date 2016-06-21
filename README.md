@@ -34,23 +34,15 @@ TODO
 ```bash
 # add -h to any command to see the help
 azure -h
-```
 
-```bash
 # TODO how to find URN
 azure vm quick-create
-```
 
-```bash
 # TODO explanation
 azure vmss quick-create
-```
 
-```bash
 # TODO Storage Accounts
-```
 
-```bash
 # TODO Networking; VMs open 
 ```
 
