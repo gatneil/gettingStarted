@@ -19,15 +19,13 @@ TODO
 
 ## Ways to access Azure
 
-TODO
-
-* REST API
-* xPlat CLI
-* Powershell
-* SDKs in various languages
-* Old Portal
-* New Portal
-* ARM Templates
+* [REST API](https://msdn.microsoft.com/en-us/library/azure/dn790568.aspx)
+* [xPlat CLI](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/)
+* [Powershell](https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/)
+* [SDKs in various languages](https://azure.microsoft.com/en-us/downloads/)
+* [Old Portal](manage.windowsazure.com) (**only supports ASM**)
+* [New Portal](portal.azure.com) (**supports both ASM and ARM**)
+* [ARM Templates](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/)
 
 # Scripting Examples
 
@@ -40,12 +38,16 @@ azure vm quick-create
 
 # TODO explanation
 azure vmss quick-create
-
-# TODO Storage Accounts
-
-# TODO Networking; VMs open 
 ```
 
 # ARM Templates
 
 TODO
+
+# Potential Surprises
+
+TODO Storage Accounts
+
+TODO Networking; VMs open if no NSGs specified
+
+TODO Deleting a VM does not delete related resources (NIC, PIP, SA, etc.)
