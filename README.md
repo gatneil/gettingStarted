@@ -22,7 +22,7 @@ Last updated June 21, 2016.
 * [SDKs in various languages](https://azure.microsoft.com/en-us/downloads/)
 * [Old Portal](https://manage.windowsazure.com) (**only supports ASM**)
 * [New Portal](https://portal.azure.com) (**supports both ASM and ARM**)
-* [ARM Templates](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/)
+* [ARM Templates](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/) (examples [here](https://github.com/Azure/azure-quickstart-templates))
 
 
 # Scripting Example
@@ -50,7 +50,7 @@ azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location
 # commonly used VM images have aliases, which can be seen in the help text for azure vm quick-create.
 # If you want to use an image that doesn't have an alias, you will need to use the commands
 # `azure vm image publisher list` and `azure vm image list <publisher>` to find the image you want.
-# In this case, the image-urn is of the form Publisher:Offer:Sku:Version (version can be `latest` if you want the latest set of patches).
+# The image-urn is of the form Publisher:Offer:Sku:Version (version can be `latest` if you want the latest set of patches).
 # I have a script that runs daily to get the full list; it dumps the output here: http://armtg.azurewebsites.net/vm_image_list.html
 #
 
