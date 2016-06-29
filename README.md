@@ -70,7 +70,7 @@ azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss
 TODO
 
 
-# Potential Surprises
+# Useful Miscellaneous Information
 
 * [Azure Active Directory](https://azure.microsoft.com/en-us/documentation/articles/active-directory-whatis/) and [vm custom image creation](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-classic-create-upload-vhd/) are currently ASM-only.
 
