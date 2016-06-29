@@ -13,6 +13,8 @@ Last updated June 29, 2016.
 
 * [Resource Groups](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-groups) hold resources that share the same lifecycle. I use them to delete entire projects with one command instead of manually keeping track of all the resources I create over the lifetime of a project.
 
+* [Resource Providers](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-providers) are services that provide resources. They look like `Microsoft.Compute`, `Microsoft.Storage`, `Microsoft.Network`, etc.
+
 
 # Ways to access Azure
 
@@ -47,7 +49,7 @@ azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location
 # you can find more info about VM sizes here:
 # https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-sizes/
 #
-# commonly used VM images have aliases, which can be seen in the help text for azure vm quick-create.
+# commonly used VM images have aliases, which can be seen in the help text for `azure vm quick-create`.
 # If you want to use an image that doesn't have an alias, you will need to use the commands
 # `azure vm image publisher list` and `azure vm image list <publisher>` to find the image you want.
 # The image-urn is of the form Publisher:Offer:Sku:Version (version can be `latest` if you want the latest set of patches).
@@ -74,9 +76,21 @@ AAD and vm image creation are currently ASM-only.
 
 [Storage Accounts](https://azure.microsoft.com/en-us/documentation/articles/storage-create-storage-account/): All persistent disks must go in a container within a storage account. Storage accounts can have different replication types and can be either `Standard` or `Premium` (premium is faster but more expensive). To use premium storage to back VM disks, the VMs must have an `S` in the instance size (e.g. `DS1`). You probably shouldn't put more than 40 VM disks in a storage account for performance reasons. When using multiple storage accounts to get better performance, try to spread across the alphabet the prefix of the storage account name (e.g. prepending a pseudo-random hash to your storage account names).
 
-TODO VMs created from custom image end up in same SA as image.
+VMs created from a custom image end up in same SA as the image. Since we recommend using no more than 40 VM disks in one storage account, this can become a scale limit. To get around this, replicate your vm image across multiple storage accounts. [This ARM template](https://github.com/Azure/azure-quickstart-templates/tree/master/301-custom-images-at-scale) is a fairly complex example of how to do this, but looking at the `upload.sh` script should give you an idea of what it looks like to replicate the VM image across acounts.
 
-TODO temporary disk
+There are 3 kinds of disks in Azure ([documentation here](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-about-disks-vhds/)): OS disks, temporary disks, and data disks. The OS disk and data disks live in the Microsoft.Storage resource provider and are therefore persistent. **The temporary disk is physically attached to the VM and is NOT PERSISTENT**. In the screenshot below (from an Ubuntu 14.04-LTS machine on Azure), the temporary disk is mounted on /mnt. Looking in that directory, we see a file named `DATALOSS_WARNING_README.txt`. This isn't a joke. If you put data there, Azure can and will lose that data if it needs to migrate the VM to a new hyper-V host.
+
+```
+negat@nsgubuntu:~/repos/gettingStarted$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  29.3G  0 disk
+└─sda1   8:1    0  29.3G  0 part /
+sdb      8:16   0    50G  0 disk
+└─sdb1   8:17   0    50G  0 part /mnt
+sr0     11:0    1   1.1M  0 rom
+negat@nsgubuntu:~/repos/gettingStarted$ ls /mnt
+cdrom  DATALOSS_WARNING_README.txt  lost+found
+```
 
 TODO Networking; VMs open if no NSGs specified
 
