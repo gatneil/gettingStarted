@@ -69,6 +69,92 @@ azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss
 
 TODO
 
+```json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "ninjasa",
+            "location": "West US",
+            "apiVersion": "2015-06-15",
+            "properties": { "accountType": "Standard_LRS" }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "ninjavnet",
+            "location": "West US",
+            "apiVersion": "2015-06-15",
+            "properties": {
+                "addressSpace": { "addressPrefixes": ["10.0.0.0/16"] },
+                "subnets": [
+                    {
+                        "name": "ninjasubnet",
+                        "properties": { "addressPrefix": "10.0.0.0/24" }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "ninjapip",
+            "location": "West US",
+            "apiVersion": "2015-06-15",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "dnsSettings": { "domainNameLabel": "ninja" }
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "ninjanic",
+            "location": "West US",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [ "Microsoft.Network/publicIPAddresses/ninjapip", "Microsoft.Network/virtualNetworks/ninjavnet" ],
+            "properties": {
+                "ipConfigurations":
+                [
+                    {
+                        "name": "ninjaipconfig",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'ninjapip')]" },
+                            "subnet": { "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'ninjavnet'), '/subnets/ninjasubnet')]" }
+                            }
+                        }
+                    ]
+                }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "ninjavm",
+            "location": "West US",
+            "apiVersion": "2015-06-15",
+            "dependsOn": ["Microsoft.Storage/storageAccounts/ninjasa", "Microsoft.Network/networkInterfaces/ninjanic"],
+            "properties": {
+                "hardwareProfile": { "vmSize": "Standard_D1_v2" },
+                "osProfile": { "computerName": "ninjavm", "adminUsername": "me", "adminPassword": "P4$$w0rd" },
+                "storageProfile": {
+                    "imageReference": { "publisher": "Canonical", "offer": "UbuntuServer", "sku": "15.10", "version": "latest" },
+                    "osDisk": {
+                        "name": "ninjaosdisk",
+                        "vhd": { "uri": "https://ninjasa.blob.core.windows.net/vhds/ninjaosdisk.vhd" },
+                        "createOption": "FromImage"
+                        }
+                    },
+                "networkProfile": {
+                    "networkInterfaces": [ { "id": "[resourceId('Microsoft.Network/networkInterfaces', 'ninjanic')]" } ]
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
+```
+
 
 # Useful Miscellaneous Information
 
