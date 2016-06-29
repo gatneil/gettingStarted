@@ -67,7 +67,9 @@ azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss
 
 # ARM Templates
 
-TODO
+ARM templates allow you to describe infrastructure and services in JSON files. You pass such a file to Azure, and Azure will deploy it for you, handling retry logic, internal throttling behavior, etc. If you redeploy the template with some changes, it will only redeploy the differences, not the whole thing. Below is a minimal template to deploy a VM. For more details, see [this documentation](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/), and for examples see [this github repo](https://github.com/Azure/azure-quickstart-templates).
+
+You could put the json below into a file called `azuredeploy.json`, then use the CLI command `azure group create -n RESOURCE_GROUP_NAME -d DEPLOYMENT_NAME -l REGION -f azuredeploy.json` to deploy it.
 
 ```json
 {
