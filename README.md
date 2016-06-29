@@ -72,13 +72,13 @@ TODO
 
 # Potential Surprises
 
-* AAD and vm image creation are currently ASM-only.
+* [Azure Active Directory](https://azure.microsoft.com/en-us/documentation/articles/active-directory-whatis/) and [vm custom image creation](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-classic-create-upload-vhd/) are currently ASM-only.
 
-* [Storage Accounts](https://azure.microsoft.com/en-us/documentation/articles/storage-create-storage-account/): All persistent disks must go in a container within a storage account. Storage accounts can have different replication types and can be either `Standard` or `Premium` (premium is faster but more expensive). To use premium storage to back VM disks, the VMs must have an `S` in the instance size (e.g. `DS1`). You probably shouldn't put more than 40 VM disks in a storage account for performance reasons. When using multiple storage accounts to get better performance, try to spread across the alphabet the prefix of the storage account name (e.g. prepending a pseudo-random hash to your storage account names).
+* All persistent disks must go in a container within a [**storage account**](https://azure.microsoft.com/en-us/documentation/articles/storage-create-storage-account/). Storage accounts can have different replication types and can be either `Standard` or `Premium` (premium is faster but more expensive). To use premium storage to back VM disks, the VMs must have an `S` in the instance size (e.g. `DS1`). You probably shouldn't put more than 40 VM disks in a storage account for performance reasons. When using multiple storage accounts to get better performance, try to spread across the alphabet the prefix of the storage account name (e.g. prepending a pseudo-random hash to your storage account names).
 
 * VMs created from a custom image end up in same storage account as the image. Since we recommend using no more than 40 VM disks in one storage account, this can become a scale limit. To get around this, replicate your vm image across multiple storage accounts. [This ARM template](https://github.com/Azure/azure-quickstart-templates/tree/master/301-custom-images-at-scale) is a fairly complex example of how to do this, but looking at the `upload.sh` script should give you an idea of what it looks like to replicate the VM image across storage accounts.
 
-* There are 3 kinds of disks in Azure ([documentation here](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-about-disks-vhds/)): OS disks, temporary disks, and data disks. The OS disk and data disks live in the Microsoft.Storage resource provider and are therefore persistent. **The temporary disk is physically attached to the VM and is NOT PERSISTENT**. In the screenshot below (from an Ubuntu 14.04-LTS machine on Azure), the temporary disk is mounted on /mnt. Looking in that directory, we see a file named `DATALOSS_WARNING_README.txt`. This isn't a joke. If you put data there, Azure can and will lose that data if it needs to migrate the VM to a new hyper-V host.
+* There are 3 kinds of disks in Azure ([documentation here](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-about-disks-vhds/)): OS disks, temporary disks, and data disks. The OS disk and data disks live in the Microsoft.Storage resource provider and are therefore persistent. **The temporary disk is physically attached to the VM host, so it is fast but NOT PERSISTENT**. In the screenshot below (from an Ubuntu 14.04-LTS machine on Azure), the temporary disk is mounted on /mnt. Looking in that directory, we see a file named `DATALOSS_WARNING_README.txt`. This isn't a joke. If you put data there, Azure can and will lose that data if it needs to migrate the VM to a new host.
 
 ```
 negat@nsgubuntu:~/repos/gettingStarted$ lsblk
@@ -92,8 +92,10 @@ negat@nsgubuntu:~/repos/gettingStarted$ ls /mnt
 cdrom  DATALOSS_WARNING_README.txt  lost+found
 ```
 
-* TODO Networking; VMs open if no NSGs specified
+* When you create a VM, all ports are open (unless you have a firewall on the VM itself). To block/allow ports, please use [network security groups](https://azure.microsoft.com/en-us/documentation/articles/virtual-networks-nsg/).
 
-* TODO Deleting a VM does not delete related resources (NIC, PIP, SA, etc.)
+* If you issue a command to delete a VM (e.g. `azure vm delete`), it will NOT delete related resources, such as the network interface, public IP address, storage account, etc. This is by design.
 
-* TODO special steps for deploying marketplace images (e.g. Bitnami)
+* The [Azure Marketplace](https://azure.microsoft.com/en-us/marketplace/) is a place to find both first and third party solutions on Azure. Within the marketplace, there are certain solutions referred as `Marketplace Images`. **Not all slutions in the Azure Marketplace are Marketplace Images`. Marketplace Images require you to click a button essentially saying "yes, I accept the legal and payment terms associated with this solution". If you want to deploy such an image programmatically, see [this documentation](https://azure.microsoft.com/en-us/blog/working-with-marketplace-images-on-azure-resource-manager/).
+
+* When you create VMs in a virtual network, you get DNS resolution on the names of the VMs for free within the virtual network. For instance, if I make VMs with names `vm1` and `vm2` in the same virtual network and put a web server on `vm2`, then from `vm1` I can do `curl vm2` and see the web page. For more information, see [this documentation](https://azure.microsoft.com/en-us/documentation/articles/virtual-networks-name-resolution-for-vms-and-role-instances/)
