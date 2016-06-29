@@ -13,7 +13,7 @@ Last updated June 29, 2016.
 
 * [Resource Groups](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-groups) hold resources that share the same lifecycle. I use them to delete entire projects with one command instead of manually keeping track of all the resources I create over the lifetime of a project.
 
-* [Resource Providers](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-providers) are services that provide resources. They look like `Microsoft.Compute`, `Microsoft.Storage`, `Microsoft.Network`, etc.
+* [Resource Providers](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-providers) are services that provide resources. They look like `Microsoft.Compute`, `Microsoft.Storage`, `Microsoft.Network`, etc. A virtual machine resource looks like `Microsoft.Compute/virtualMachines`.
 
 
 # Ways to access Azure
