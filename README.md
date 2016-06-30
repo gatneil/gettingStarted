@@ -58,7 +58,8 @@ azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location
 
 # TODO create VM from custom image
 
-# TODO show adding extension; link to page listing extensions
+# TODO explain command adding extension; link to page listing extensions
+azure vm extension set -g nsgquickvmrg -m nsgquickvm -n CustomScriptForLinux -p Microsoft.OSTCExtensions -o 1.5 -i '{"fileUris": ["https://raw.githubusercontent.com/gatneil/scripts/master/hello.sh"], "commandToExecute": "sh hello.sh"}'
 
 # VM Scale Sets (VMSS) are sets of identical VMs in a highly available configuration that can autoscale/manual scale (more info here: https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/)
 azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss --location westus --image-urn UbuntuLTS --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd --capacity 3
