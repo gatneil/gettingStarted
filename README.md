@@ -72,6 +72,8 @@ ARM templates allow you to describe infrastructure and services in JSON files. Y
 
 You could put the json below into a file called `azuredeploy.json`, then use the CLI command `azure group create -n RESOURCE_GROUP_NAME -d DEPLOYMENT_NAME -l REGION -f azuredeploy.json` to deploy it.
 
+TODO once ARMTG is ready, put link here.
+
 ```json
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
@@ -157,7 +159,6 @@ You could put the json below into a file called `azuredeploy.json`, then use the
     "outputs": {}
 }
 ```
-
 
 # Useful Miscellaneous Information
 
