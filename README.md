@@ -3,7 +3,7 @@ Getting Started On Azure (An Unofficial Guide by a Linux User)
 
 # Basic Terminology
 
-Last updated June 29, 2016.
+Last updated July 7, 2016.
 
 * [Subscriptions](https://azure.microsoft.com/en-us/documentation/articles/active-directory-how-subscriptions-associated-directory/) let you log in to Azure. You can find your subscription id in the "Subscriptions" tab of the New Portal.
 
