@@ -74,7 +74,7 @@ azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss
 # Debugging
 
 * [resources.azure.com](https://resources.azure.com) gives you a hierarchical view of your resources and the "instance view", which can be very helpful for debugging.
-* The new portal has "audit logs", which are awesome.
+* [Audit Logs](https://azure.microsoft.com/en-us/documentation/articles/resource-group-audit/) show you all write operations performed on your resources.
 
 
 # ARM Templates
