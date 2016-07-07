@@ -5,9 +5,9 @@ Getting Started On Azure (An Unofficial Guide by a Linux User)
 
 Last updated June 29, 2016.
 
-* [Subscriptions](https://azure.microsoft.com/en-us/documentation/articles/active-directory-how-subscriptions-associated-directory/) let you log in to Azure.
+* [Subscriptions](https://azure.microsoft.com/en-us/documentation/articles/active-directory-how-subscriptions-associated-directory/) let you log in to Azure. You can find your subscription id in the "Subscriptions" tab of the New Portal.
 
-* [Service Principals](https://azure.microsoft.com/en-us/documentation/articles/resource-group-create-service-principal-portal/) give you long-lasting credentials for use in an app or automated/long-running scripts.
+* [Service Principals](https://azure.microsoft.com/en-us/documentation/articles/resource-group-create-service-principal-portal/) give you long-lasting credentials for use in an app or automated/long-running scripts. If you need a clientId/applicationId/tenantId, you get them by creating a service principal.
 
 * [ASM vs. ARM](https://azure.microsoft.com/en-us/documentation/articles/resource-manager-deployment-model/): Azure Resource Manager (ARM) is the new stack; Azure Service Management (ASM or "classic") is the old stack. Use ARM whenever possible. If you have ASM infrastructure that you want to migrate to ARM, refer to [this documentation](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-migration-classic-resource-manager-deep-dive/). **This getting started guide deals almost exclusively with ARM.**
 
@@ -57,6 +57,8 @@ azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location
 #
 
 # TODO create VM from custom image
+# assumes you have defined variables AZURE_STORAGE_ACCOUNT and AZURE_STORAGE_ACCESS_KEY
+azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location westus --os-type Linux --image-urn https://negat.blob.core.windows.net/public/ubuntu.vhd --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd
 
 # TODO replace short flags with long descriptive ones; link to page listing extensions
 azure vm extension set -g nsgquickvmrg -m nsgquickvm -n CustomScriptForLinux -p Microsoft.OSTCExtensions -o 1.5 -i '{"fileUris": ["https://raw.githubusercontent.com/gatneil/scripts/master/hello.sh"], "commandToExecute": "sh hello.sh"}'
@@ -68,6 +70,11 @@ azure vm extension set -g nsgquickvmrg -m nsgquickvm -n CustomScriptForLinux -p 
 # VM Scale Sets (VMSS) are sets of identical VMs in a highly available configuration that can autoscale/manual scale (more info here: https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/)
 azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss --location westus --image-urn UbuntuLTS --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd --capacity 3
 ```
+
+# Debugging
+
+* [resources.azure.com](resources.azure.com) gives you a hierarchical view of your resources and the "instance view", which can be very helpful for debugging.
+* The new portal has "audit logs", which are awesome.
 
 
 # ARM Templates
