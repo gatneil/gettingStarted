@@ -60,12 +60,21 @@ azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location
 # assumes you have defined variables AZURE_STORAGE_ACCOUNT and AZURE_STORAGE_ACCESS_KEY
 azure vm quick-create --resource-group nsgquickvmrg --name nsgquickvm --location westus --os-type Linux --image-urn https://negat.blob.core.windows.net/public/ubuntu.vhd --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd
 
-# TODO replace short flags with long descriptive ones; link to page listing extensions
-azure vm extension set -g nsgquickvmrg -m nsgquickvm -n CustomScriptForLinux -p Microsoft.OSTCExtensions -o 1.5 -i '{"fileUris": ["https://raw.githubusercontent.com/gatneil/scripts/master/hello.sh"], "commandToExecute": "sh hello.sh"}'
+# TODO TEST
+# use a custom script extension for linux to run a script on the vm
+azure vm extension set --resource-group nsgquickvmrg --vm-name nsgquickvm --publisher-name Microsoft.OSTCExtensions --name CustomScriptForLinux --version 1.5 --public-config '{"fileUris": ["https://raw.githubusercontent.com/gatneil/scripts/master/hello.sh"], "commandToExecute": "sh hello.sh"}'
 
 # TODO TEST
 # if you want to pass in secrets to the script, please use the private config as such:
-azure vm extension set -g nsgquickvmrg -m nsgquickvm -n CustomScriptForLinux -p Microsoft.OSTCExtensions -o 1.5 -i '{"fileUris": ["https://raw.githubusercontent.com/gatneil/scripts/master/hello.sh"]}' -f '{"commandToExecute": "sh hello.sh MY_AWESOME_SECRET"}'
+azure vm extension set --resource-group nsgquickvmrg --vm-name nsgquickvm --publisher-name Microsoft.OSTCExtensions --name CustomScriptForLinux --version 1.5 --public-config '{"fileUris": ["https://raw.githubusercontent.com/gatneil/scripts/master/hello.sh"]}' --private-config '{"commandToExecute": "sh hello.sh MY_AWESOME_SECRET"}'
+
+#
+# you can find more info about VM extensions here:
+# https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-extensions-features/
+#
+# each extension has a publisher, type, and a typeHandlerVersion (which is basically just the extension version). You can get the list with `azure vm extension-image list`
+# I have a script that runs daily to get the full list; it dumps the output here: http://armtg.azurewebsites.net/extension_list.html
+#
 
 # VM Scale Sets (VMSS) are sets of identical VMs in a highly available configuration that can autoscale/manual scale (more info here: https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/)
 azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss --location westus --image-urn UbuntuLTS --vm-size Standard_D2_v2 --admin-username negat --admin-password P4%%w0rd --capacity 3
