@@ -27,7 +27,7 @@ Last updated July 7, 2016.
 * [ARM Templates](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/) (examples [here](https://github.com/Azure/azure-quickstart-templates))
 
 
-# Scripting Example
+# Scripting Example (Azure xPlat CLI)
 
 ```bash
 # add -h to any command to see the help
