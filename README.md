@@ -77,6 +77,13 @@ azure vmss quick-create --resource-group-name nsgquickvmssrg --name nsgquickvmss
 * [Audit Logs](https://azure.microsoft.com/en-us/documentation/articles/resource-group-audit/) show you all write operations performed on your resources.
 
 
+# Getting help
+
+* [MSDN Forums](https://social.msdn.microsoft.com/Forums/en-US/home?category=windowsazureplatform&filter=alltypes&sort=lastpostdesc)
+* [Stack Overflow](http://stackoverflow.com/questions/tagged/azure)
+* [Azure Support](https://azure.microsoft.com/en-us/support/plans/) (you can submit a support ticket from the question mark button in the new portal even without a support agreement).
+
+
 # ARM Templates
 
 ARM templates allow you to describe infrastructure and services in JSON files. You pass such a file to Azure, and Azure will deploy it for you, handling retry logic, internal throttling behavior, etc. If you redeploy the template with some changes, it will only redeploy the differences, not the whole thing. Below is a minimal template to deploy a VM. For more details, see [this documentation](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/), and for examples see [this github repo](https://github.com/Azure/azure-quickstart-templates).
